@@ -98,6 +98,19 @@ typedef struct	s_dda
 	int side;
 }		t_dda;
 
+typedef struct s_info
+{
+	int render_x;
+	int render_y; // R
+	char *path_no;
+	char *path_so;
+	char *path_we;
+	char *path_ea;
+	char *path_s;
+	char *path_f;
+	char *path_c;
+}		t_info;
+
 int	cub3d();
 void	param_init(t_mlx *mlx);
 void	mlxs_init(t_mlx *mlx);
