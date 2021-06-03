@@ -115,7 +115,7 @@ int	cub3d();
 void	param_init(t_mlx *mlx);
 void	mlxs_init(t_mlx *mlx);
 void	imgs_init(t_mlx *mlx);
-int	close(t_mlx *mlx);
+int	_close(t_mlx *mlx);
 void	draw_line(int line_h, int x_start, int y_start, int side, t_mlx *mlx, int stepX, int stepY);
 int	rendering(t_mlx *mlx);
 int	key_press(int keycode, t_mlx *mlx);

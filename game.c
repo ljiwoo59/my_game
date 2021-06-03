@@ -25,7 +25,7 @@ void	imgs_init(t_mlx *mlx)
 	mlx->img->data = (int *)mlx_get_data_addr(mlx->img->img_ptr, &mlx->img->bpp, &mlx->img->size_l, &mlx->img->endian);
 }
 
-int	close(t_mlx *mlx)
+int	_close(t_mlx *mlx)
 {
 	free(mlx->param);
 	free(mlx->img);
@@ -189,11 +189,11 @@ int	key_press(int keycode, t_mlx *mlx)
 		mlx->param->planeY = oldplaneX * sin(-rotspeed) + mlx->param->planeY * cos(-rotspeed);
 	}
 	else if (keycode == KEY_ESC)
-		close(mlx);	
+		_close(mlx);	
 	return (0);
 }
 
-int	cub3d()
+int	main()
 {
 	t_mlx	*mlx;
 
