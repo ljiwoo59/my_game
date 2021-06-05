@@ -23,33 +23,6 @@
 # define HEIGHT 480
 # define mapWidth 24
 # define mapHeight 24
-int worldMap[mapWidth][mapHeight]=
-{
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
 
 typedef struct s_param
 {
@@ -59,8 +32,25 @@ typedef struct s_param
 	double	dirY;
 	double	planeX;
 	double	planeY;
-	double	time;
-	double	oldtime;
+	double cameraX;
+	double rayDirX;
+	double rayDirY;
+	int mapX;
+	int mapY;
+	double sideDistX;
+	double sideDistY;
+	double deltaDistX;
+	double deltaDistY;
+	double perpWallDist;
+	int stepX;
+	int stepY;
+	int hit;
+	int side;
+	int lineHeight;
+	int y_start;
+	int y_end;
+	double movespeed;
+	double rotspeed;
 }		t_param;
 
 typedef struct	s_img
@@ -80,46 +70,35 @@ typedef struct	s_mlx
 	t_param *param;
 }		t_mlx;
 
-typedef struct	s_dda
-{
-	double cameraX;
-	double rayDirX;
-	double rayDirY;
-	int mapX;
-	int mapY;
-	double sideDistX;
-	double sideDistY;
-	double deltaDistX;
-	double deltaDistY;
-	double perpWallDist;
-	int stepX;
-	int stepY;
-	int hit;
-	int side;
-}		t_dda;
-
 typedef struct s_info
 {
-	int render_x;
-	int render_y; // R
 	char *path_no;
 	char *path_so;
 	char *path_we;
 	char *path_ea;
-	char *path_s;
 	char *path_f;
 	char *path_c;
 }		t_info;
 
+void	error();
 int	cub3d();
-void	param_init(t_mlx *mlx);
-void	mlxs_init(t_mlx *mlx);
+void	program_init(t_mlx *mlx);
 void	imgs_init(t_mlx *mlx);
+void	r_param_init(t_mlx *mlx, int x);
+void	r_param_init2(t_mlx *mlx);
+void	r_param_set(t_mlx *mlx, int x);
+void	dda_set(t_mlx *mlx);
 int	_close(t_mlx *mlx);
-void	draw_line(int line_h, int x_start, int y_start, int side, t_mlx *mlx, int stepX, int stepY);
+void	draw_line(t_mlx *mlx, int x_start);
+void	wall_color(t_mlx *mlx, int y, int x_start);
 int	rendering(t_mlx *mlx);
 int	key_press(int keycode, t_mlx *mlx);
-
+void	key_w(t_mlx *mlx);
+void	key_s(t_mlx *mlx);
+void	key_a(t_mlx *mlx);
+void	key_d(t_mlx *mlx);
+void	key_left(t_mlx *mlx);
+void	key_right(t_mlx *mlx);
 int	ft_strcmp(char *s1, char *s2);
 
 #endif

@@ -1,29 +1,31 @@
 #include "cub3d.h"
-extern int worldMap[mapWidth][mapHeight];
-
-void	param_init(t_mlx *mlx)
+int worldMap[mapWidth][mapHeight]=
 {
-	mlx->param->posX = 22;
-	mlx->param->posY = 12;
-	mlx->param->dirX = -1;
-	mlx->param->dirY = 0;
-	mlx->param->planeX = 0;
-	mlx->param->planeY = 0.66;
-	mlx->param->time = 0;
-	mlx->param->oldtime = 0;
-}
-
-void	mlxs_init(t_mlx *mlx)
-{
-	mlx->mlx_ptr = mlx_init();
-	mlx->win = mlx_new_window(mlx->mlx_ptr, WIDTH, HEIGHT, "cub3d");	
-}
-
-void	imgs_init(t_mlx *mlx)
-{
-	mlx->img->img_ptr = mlx_new_image(mlx->mlx_ptr, WIDTH, HEIGHT);
-	mlx->img->data = (int *)mlx_get_data_addr(mlx->img->img_ptr, &mlx->img->bpp, &mlx->img->size_l, &mlx->img->endian);
-}
+  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+};
 
 int	_close(t_mlx *mlx)
 {
@@ -33,175 +35,171 @@ int	_close(t_mlx *mlx)
 	exit(0);
 }
 
-void	draw_line(int line_h, int x_start, int y_start, int side, t_mlx *mlx, int stepX, int stepY)
+void	wall_color(t_mlx *mlx, int y, int x_start)
 {
-	int x;
-	
-	x = -1;
-	while (++x < line_h)
+	int pos;
+
+	pos = y * WIDTH + x_start;
+	if (mlx->param->side == 1)
 	{
-		if (((y_start + x) * WIDTH + x_start) < WIDTH * HEIGHT)
-		{
-			if (side == 1)
-			{
-				if (stepY == 1)
-					mlx->img->data[(y_start + x) * WIDTH + x_start] = 0xFF0000; //R
-				else
-					mlx->img->data[(y_start + x) * WIDTH + x_start] = 0x00FF00; //G
-			}
-			else
-			{
-				if (stepX == 1)
-					mlx->img->data[(y_start + x) * WIDTH + x_start] = 0x0000FF; //B
-				else
-					mlx->img->data[(y_start + x) * WIDTH + x_start] = 0xFFFF00;
-			}
-		}
+		if (mlx->param->stepY == 1)
+			mlx->img->data[pos] = 0xFF0000; //R
+		else
+			mlx->img->data[pos] = 0x00FF00; //G
 	}
+	else
+	{
+		if (mlx->param->stepX == 1)
+			mlx->img->data[pos] = 0x0000FF; //B
+		else
+			mlx->img->data[pos] = 0xFFFF00;
+	}
+}
+
+void	draw_line(t_mlx *mlx, int x_start)
+{
+	int y;
+	
+	y = -1;
+	while (++y < HEIGHT)
+	{
+		if (y < mlx->param->y_start)
+			mlx->img->data[(y * WIDTH + x_start)] = 0xC0FFFF;
+		else if (y > mlx->param->y_end)
+			mlx->img->data[(y * WIDTH + x_start)] = 0xFFE4E1;
+		else
+			wall_color(mlx, y, x_start);
+	}
+}
+
+void	r_param_init2(t_mlx *mlx)
+{
+	if (mlx->param->rayDirX < 0)
+	{
+		mlx->param->stepX = -1;
+		mlx->param->sideDistX = (mlx->param->posX - mlx->param->mapX) * mlx->param->deltaDistX;
+	}
+	else
+	{
+		mlx->param->stepX = 1;
+		mlx->param->sideDistX = (mlx->param->mapX + 1 - mlx->param->posX) * mlx->param->deltaDistX;
+	}
+	if (mlx->param->rayDirY < 0)
+	{
+		mlx->param->stepY = -1;
+		mlx->param->sideDistY = (mlx->param->posY - mlx->param->mapY) * mlx->param->deltaDistY;
+	}
+	else
+	{
+		mlx->param->stepY = 1;
+		mlx->param->sideDistY = (mlx->param->mapY + 1 - mlx->param->posY) * mlx->param->deltaDistY;
+	}
+}
+
+void	r_param_init(t_mlx *mlx, int x)
+{
+	mlx->param->cameraX = 2 * x / (double)WIDTH - 1;
+	mlx->param->rayDirX = mlx->param->dirX + mlx->param->planeX * mlx->param->cameraX;
+	mlx->param->rayDirY = mlx->param->dirY + mlx->param->planeY * mlx->param->cameraX;
+	mlx->param->mapX = (int)mlx->param->posX;
+	mlx->param->mapY = (int)mlx->param->posY;
+	mlx->param->deltaDistX = fabs(1 / mlx->param->rayDirX);
+	mlx->param->deltaDistY = fabs(1 / mlx->param->rayDirY);
+	mlx->param->hit = 0;
+	r_param_init2(mlx);
+}
+
+void	r_param_set(t_mlx *mlx, int x)
+{
+	if (mlx->param->side == 0)
+		mlx->param->perpWallDist = (mlx->param->mapX - mlx->param->posX + (1 - mlx->param->stepX) / 2) / mlx->param->rayDirX;
+	else
+		mlx->param->perpWallDist = (mlx->param->mapY - mlx->param->posY + (1 - mlx->param->stepY) / 2) / mlx->param->rayDirY;
+	mlx->param->lineHeight = (int)(HEIGHT / mlx->param->perpWallDist);
+	mlx->param->y_start = -mlx->param->lineHeight / 2 + HEIGHT / 2;
+	if (mlx->param->y_start < 0)
+		mlx->param->y_start = 0;
+	mlx->param->y_end = mlx->param->lineHeight / 2 + HEIGHT / 2;
+	if (mlx->param->y_end >= HEIGHT)
+		mlx->param->y_end = HEIGHT - 1;
+	draw_line(mlx, x);
+}
+
+void	dda_set(t_mlx *mlx)
+{
+	if (mlx->param->sideDistX < mlx->param->sideDistY)
+	{	
+		mlx->param->sideDistX += mlx->param->deltaDistX;
+		mlx->param->mapX += mlx->param->stepX;
+		mlx->param->side = 0;
+	}
+	else
+	{
+		mlx->param->sideDistY += mlx->param->deltaDistY;
+		mlx->param->mapY += mlx->param->stepY;
+		mlx->param->side = 1;
+	}
+	if (worldMap[mlx->param->mapX][mlx->param->mapY] > 0)
+		mlx->param->hit = 1;
 }
 
 int	rendering(t_mlx *mlx)
 {
-	int x = -1;
+	int x;
 	
+	x = -1;
 	while (++x < WIDTH)
 	{
-		double cameraX = 2 * x / (double)WIDTH - 1;
-		double rayDirX = mlx->param->dirX + mlx->param->planeX * cameraX;
-		double rayDirY = mlx->param->dirY + mlx->param->planeY * cameraX;
-		int mapX = (int)mlx->param->posX;
-		int mapY = (int)mlx->param->posY;
-		double sideDistX;
-		double sideDistY;
-		double deltaDistX = fabs(1 / rayDirX);
-		double deltaDistY = fabs(1 / rayDirY);
-		double perpWallDist;
-		int stepX;
-		int stepY;
-		int hit = 0;
-		int side;
-
-		if (rayDirX < 0)
-		{
-			stepX = -1;
-			sideDistX = (mlx->param->posX - mapX) * deltaDistX;
-		}
-		else
-		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - mlx->param->posX) * deltaDistX;
-		}
-		if (rayDirY < 0)
-		{
-			stepY = -1;
-			sideDistY = (mlx->param->posY - mapY) * deltaDistY;
-		}
-		else
-		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - mlx->param->posY) * deltaDistY;
-		}
-		while (hit == 0)
-		{
-			if (sideDistX < sideDistY)
-			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
-			}
-			else
-			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
-			}
-			if (worldMap[mapX][mapY] > 0)
-				hit = 1;
-		}
-		if (side == 0)
-			perpWallDist = (mapX - mlx->param->posX + (1 - stepX) / 2) / rayDirX;
-		else
-			perpWallDist = (mapY - mlx->param->posY + (1 - stepY) / 2) / rayDirY;
-
-		int lineHeight = (int)(HEIGHT / perpWallDist);
-		int y_start = -lineHeight / 2 + HEIGHT / 2;
-		if (y_start < 0)
-			y_start = 0;
-		if (y_start >= HEIGHT)
-			y_start = HEIGHT - 1;
-		draw_line(lineHeight, x, y_start, side, mlx, stepX, stepY);
+		r_param_init(mlx, x);
+		while (mlx->param->hit == 0)
+			dda_set(mlx);
+		r_param_set(mlx, x);
 	}
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, mlx->img->img_ptr, 0, 0);
 	return (0);
 }
 
-int	key_press(int keycode, t_mlx *mlx)
+void	error()
 {
-	double movespeed = 0.5;
-	double rotspeed = 0.33;
+	write(2, "Error\n", 6);
+	exit(0);
+}
 
-	mlx_destroy_image(mlx->mlx_ptr, mlx->img->img_ptr);	
-	imgs_init(mlx);
-	if (keycode == KEY_W)
-	{
-		if (worldMap[(int)(mlx->param->posX + mlx->param->dirX * movespeed)][(int)mlx->param->posY] == 0)
-			mlx->param->posX += mlx->param->dirX * movespeed;
-		if (worldMap[(int)mlx->param->posX][(int)(mlx->param->posY + mlx->param->dirY * movespeed)] == 0)
-			mlx->param->posY += mlx->param->dirY * movespeed;
-	}	
-	else if (keycode == KEY_S)
-	{
-		if (worldMap[(int)(mlx->param->posX - mlx->param->dirX * movespeed)][(int)mlx->param->posY] == 0)
-			mlx->param->posX -= mlx->param->dirX * movespeed;
-		if (worldMap[(int)mlx->param->posX][(int)(mlx->param->posY - mlx->param->dirY * movespeed)] == 0)
-			mlx->param->posY -= mlx->param->dirY * movespeed;
-	}	
-	else if (keycode == KEY_A)
-	{
-		if (worldMap[(int)(mlx->param->posX - mlx->param->planeX * movespeed)][(int)mlx->param->posY] == 0)
-			mlx->param->posX -= mlx->param->planeX * movespeed;
-		if (worldMap[(int)mlx->param->posX][(int)(mlx->param->posY - mlx->param->planeY * movespeed)] == 0)
-			mlx->param->posY -= mlx->param->planeY * movespeed;
-	}	
-	else if (keycode == KEY_D)
-	{
-		if (worldMap[(int)(mlx->param->posX + mlx->param->planeX * movespeed)][(int)mlx->param->posY] == 0)
-			mlx->param->posX += mlx->param->planeX * movespeed;
-		if (worldMap[(int)mlx->param->posX][(int)(mlx->param->posY + mlx->param->planeY * movespeed)] == 0)
-			mlx->param->posY += mlx->param->planeY * movespeed;
-	}	
-	else if (keycode == KEY_LEFT)
-	{
-		double olddirX = mlx->param->dirX;
-		mlx->param->dirX = mlx->param->dirX * cos(rotspeed) - mlx->param->dirY * sin(rotspeed);
-		mlx->param->dirY = olddirX * sin(rotspeed) + mlx->param->dirY * cos(rotspeed);
-		double oldplaneX = mlx->param->planeX;
-		mlx->param->planeX = mlx->param->planeX * cos(rotspeed) - mlx->param->planeY * sin(rotspeed);
-		mlx->param->planeY = oldplaneX * sin(rotspeed) + mlx->param->planeY * cos(rotspeed);
-	}
-	else if (keycode == KEY_RIGHT)
-	{
-		double olddirX = mlx->param->dirX;
-		mlx->param->dirX = mlx->param->dirX * cos(-rotspeed) - mlx->param->dirY * sin(-rotspeed);
-		mlx->param->dirY = olddirX * sin(-rotspeed) + mlx->param->dirY * cos(-rotspeed);
-		double oldplaneX = mlx->param->planeX;
-		mlx->param->planeX = mlx->param->planeX * cos(-rotspeed) - mlx->param->planeY * sin(-rotspeed);
-		mlx->param->planeY = oldplaneX * sin(-rotspeed) + mlx->param->planeY * cos(-rotspeed);
-	}
-	else if (keycode == KEY_ESC)
-		_close(mlx);	
-	return (0);
+void	program_init(t_mlx *mlx)
+{
+	if (!(mlx->mlx_ptr = mlx_init()))
+		error();
+	if (!(mlx->win = mlx_new_window(mlx->mlx_ptr, WIDTH, HEIGHT, "cub3d")))
+		error();
+	mlx->param->posX = 22;
+	mlx->param->posY = 12;
+	mlx->param->dirX = -1;
+	mlx->param->dirY = 0;
+	mlx->param->planeX = 0;
+	mlx->param->planeY = 0.66;
+	mlx->param->movespeed = 0.5;
+	mlx->param->rotspeed = 0.33;
+}
+
+void	imgs_init(t_mlx *mlx)
+{
+	if (!(mlx->img->img_ptr = mlx_new_image(mlx->mlx_ptr, WIDTH, HEIGHT)))
+		error();
+	if (!(mlx->img->data = (int *)mlx_get_data_addr(mlx->img->img_ptr, &mlx->img->bpp, &mlx->img->size_l, &mlx->img->endian)))
+		error();
 }
 
 int	main()
 {
 	t_mlx	*mlx;
 
-	mlx = (t_mlx *)malloc(sizeof(t_mlx));
-	mlx->param = (t_param *)malloc(sizeof(t_param));
-	mlx->img = (t_img *)malloc(sizeof(t_img));
-	param_init(mlx);
-	mlxs_init(mlx);
+	if (!(mlx = (t_mlx *)malloc(sizeof(t_mlx))))
+		error();
+	if (!(mlx->param = (t_param *)malloc(sizeof(t_param))))
+		error();
+	if (!(mlx->img = (t_img *)malloc(sizeof(t_img))))
+		error();
+	program_init(mlx);
 	imgs_init(mlx);
 	mlx_hook(mlx->win, X_EVENT_KEY_PRESS, 0, &key_press, mlx);
 	mlx_hook(mlx->win, X_EVENT_KEY_EXIT, 0, &close, mlx);
