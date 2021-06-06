@@ -23,6 +23,8 @@
 # define HEIGHT 480
 # define mapWidth 24
 # define mapHeight 24
+# define tw 64
+# define th 64
 
 typedef struct s_param
 {
@@ -49,6 +51,11 @@ typedef struct s_param
 	int lineHeight;
 	int y_start;
 	int y_end;
+	double wallX;
+	int texX;
+	double step;
+	double texPos;
+	int texY;
 	double movespeed;
 	double rotspeed;
 }		t_param;
@@ -60,6 +67,16 @@ typedef struct	s_img
 	int	size_l;
 	int	bpp;
 	int	endian;
+	int	width;
+	int	height;
+	void	*t_ptr;
+	int	*texture;
+	int	*texture2;
+	int	*texture3;
+	int	*texture4;
+	int	t_size_l;
+	int	t_bpp;
+	int	t_endian;
 }		t_img;
 
 typedef struct	s_mlx
@@ -83,10 +100,12 @@ typedef struct s_info
 void	error();
 int	cub3d();
 void	program_init(t_mlx *mlx);
+void	texture_init(t_mlx *mlx);
 void	imgs_init(t_mlx *mlx);
 void	r_param_init(t_mlx *mlx, int x);
 void	r_param_init2(t_mlx *mlx);
 void	r_param_set(t_mlx *mlx, int x);
+void	r_param_set2(t_mlx *mlx);
 void	dda_set(t_mlx *mlx);
 int	_close(t_mlx *mlx);
 void	draw_line(t_mlx *mlx, int x_start);
