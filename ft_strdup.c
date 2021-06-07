@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-char	*ft_strdup(const char *s1)
+char	*ft_strdup(char *s1)
 {
 	char	*ptr;
 	int		len;
@@ -8,16 +8,13 @@ char	*ft_strdup(const char *s1)
 
 	len = ft_strlen(s1);
 	if (!(ptr = (char *)malloc(len + 1)))
-	{
-		perror("Error\n");
-		exit(1);
-	}
+		error();
 	i = 0;
 	while (i < len)
 	{
 		ptr[i] = s1[i];
 		i++;
 	}
-	ptr[i] = '\0';
+	ptr[i] = 0;
 	return (ptr);
 }

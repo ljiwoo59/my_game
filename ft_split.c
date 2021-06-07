@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-static int		ft_wordcount(char const *s, char c)
+int		ft_wordcount(char *s, char c)
 {
 	int count;
 	int word;
@@ -21,7 +21,7 @@ static int		ft_wordcount(char const *s, char c)
 	return (count);
 }
 
-static void		ft_strcpy(char *arr, char *start, char const *end)
+void		ft_strcpy(char *arr, char *start, char *end)
 {
 	while (start < end)
 	{
@@ -32,28 +32,16 @@ static void		ft_strcpy(char *arr, char *start, char const *end)
 	*arr = 0;
 }
 
-static char		**ft_free(char **arr, int i)
-{
-	while (i >= 0)
-		free(arr[i--]);
-	free(arr);
-	perror("Error\n"); //malloc fail
-	exit(1);
-}
-
-char			**ft_split(char const *s, char c)
+char			**ft_split(char *s, char c)
 {
 	char	**arr;
 	char	*start;
 	int		i;
 
 	if (!(arr = (char **)malloc(sizeof(char *) * (ft_wordcount(s, c) + 1))))
-	{
-		perror("Error\n"); //malloc fail
-		exit(1);
-	}
+		error();
 	i = 0;
-	while (*s != "\n")
+	while (*s)
 	{
 		if (*s != c)
 		{
@@ -61,7 +49,7 @@ char			**ft_split(char const *s, char c)
 			while (*s != c && *s)
 				s++;
 			if (!(arr[i] = (char *)malloc(s - start + 1)))
-				ft_free(arr, i);
+				error();
 			ft_strcpy(arr[i++], start, s);
 		}
 		if (*s)

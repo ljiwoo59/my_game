@@ -7,6 +7,7 @@
 # include <math.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include <limits.h>
 
 # define X_EVENT_KEY_PRESS 2
 # define X_EVENT_KEY_RELEASE 3
@@ -93,8 +94,8 @@ typedef struct s_info
 	char *path_so;
 	char *path_we;
 	char *path_ea;
-	char *path_f;
-	char *path_c;
+	int path_f;
+	int path_c;
 }		t_info;
 
 void	error();
@@ -118,6 +119,18 @@ void	key_a(t_mlx *mlx);
 void	key_d(t_mlx *mlx);
 void	key_left(t_mlx *mlx);
 void	key_right(t_mlx *mlx);
-int	ft_strcmp(char *s1, char *s2);
 
+int		get_next_line(int fd, char **line);
+int		is_new_line(char *s);
+int		ft_strlen(char *s);
+int		ft_sstrlen(char **s);
+char	*ft_strldup(char *s1, int start, int end);
+char	*ft_strldup_file(char *s1, int start, int end);
+char	*ft_strdup(char *s1);
+char	*ft_strjoin(char *s1, char *s2);
+int	ft_wordcount(char *s, char c);
+void	ft_strcpy(char *arr, char *start, char *end);
+char	**ft_split(char *s, char c);
+void	validation(char *str);
+int	ft_atoi(char *str);
 #endif

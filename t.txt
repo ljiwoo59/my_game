@@ -1,0 +1,5 @@
+
+NO ./abcd.png
+SO ./bad.png
+
+F 255,0,0

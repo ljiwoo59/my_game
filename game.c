@@ -32,7 +32,13 @@ int	_close(t_mlx *mlx)
 	free(mlx->param);
 	free(mlx->img);
 	free(mlx);
-	pause();
+	free(info->path_no);
+	free(info->path_so);
+	free(info->path_we);
+	free(info->path_ea);
+//	free(info->path_f);
+//	free(info->path_c);
+	free(info);
 	exit(0);
 }
 
@@ -175,12 +181,6 @@ int	rendering(t_mlx *mlx)
 	}
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, mlx->img->img_ptr, 0, 0);
 	return (0);
-}
-
-void	error()
-{
-	write(2, "Error\n", 6);
-	exit(0);
 }
 
 void	program_init(t_mlx *mlx)

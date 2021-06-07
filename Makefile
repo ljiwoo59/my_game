@@ -2,7 +2,7 @@ CC = gcc
 CFLAG = -Lminilibx -lmlx -framework OpenGL -framework AppKit
 
 TARGET = cub3d
-SRC = game.c keycode.c keycode2.c
+SRC = game.c keycode.c keycode2.c error.c
 
 $(NAME) : all
 

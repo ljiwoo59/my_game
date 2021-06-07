@@ -1,241 +1,102 @@
 #include "cub3d.h"
 
-char	*read_file(char *s1)
+int ft_sstrlen(char **s)
 {
-	int fd;
-	int byte;
-	char c;
-	char *text;
+	int count;
 
-	if ((fd == open(s1, O_RDONLY)) < 0)
-		return (0);
-	else
-	{
-		byte = 0;
-		while (read(fd, &c, 1) > 0)
-			byte++;
-		close(fd);
-		if (!(text = (char *)malloc(byte + 1)))
-			return (1);
-		if ((fd == open(s1, O_RDONLY)) < 0)
-			return (1);
-		read(fd, text, byte);
-		text[byte] = 0;
-		close(fd);
-	}
-	return (text);
-}
-
-int	only_digit(char *s1)
-{
-	while (*s1)
-	{
-		if (*s1 < 48 || *s1 > 57)
-			return (0);
-		s1++;
-	}
-	return (1);
-}
-
-int	ft_sstrlen(char **s1)
-{
 	count = 0;
-	while (*s1)
-	{
+	while (*s++)
 		count++;
-		s1++;
-	}	
 	return (count);
 }
 
-void	check(char *s1, t_info *info)
+int ft_strcmp(char *s1, char *s2)
 {
-	int all;
-	int i;
-	char	**temp;
-
-	all = 8; // element num
-	i = 0;
-	while (all)
-	{
-		if (ft_strncmp(s1 + i, "R ", 2))
-		{
-			temp = ft_split(s1 + i, " ");
-			if (ft_sstrlen(temp) == 3 && (only_digit(temp[1]) && only_digit(temp[2])))
-			{
-				info->render_x = ft_atoi(ft_strdup(temp[1]));
-				info->render_y = ft_atoi(ft_strdup(temp[2]));
-				all--;
-			}
-			else
-			{
-				perror("Error\n"); //wrong R
-				exit(1);
-			}
-			free(temp);
-		}
-		else if (ft_strncmp(s1 + i, "NO ", 3))
-		{
-			temp = ft_split(s1 + i, " ");
-			if (ft_sstrlen(temp) == 2)
-			{
-				info->path_n = ft_strdup(temp[1]);
-				all--;
-			}
-			else
-			{
-				perror("Error\n"); //wrong NO
-				exit(1);
-			}
-			free(temp);
-		}
-
-		else if (ft_strncmp(s1 + i, "SO ", 3))
-		{
-			temp = ft_split(s1 + i, " ");
-			if (ft_sstrlen(temp) == 2)
-			{
-				info->path_n = ft_strdup(temp[1]);
-				all--;
-			}
-			else
-			{
-				perror("Error\n"); //wrong SO
-				exit(1);
-			}
-			free(temp);
-		}
-		else if (ft_strncmp(s1 + i, "WE ", 3))
-		{
-			temp = ft_split(s1 + i, " ");
-			if (ft_sstrlen(temp) == 2)
-			{
-				info->path_n = ft_strdup(temp[1]);
-				all--;
-			}
-			else
-			{
-				perror("Error\n"); //wrong WE
-				exit(1);
-			}
-			free(temp);
-		}
-		else if (ft_strncmp(s1 + i, "EA ", 3))
-		{
-			temp = ft_split(s1 + i, " ");
-			if (ft_sstrlen(temp) == 2)
-			{
-				info->path_n = ft_strdup(temp[1]);
-				all--;
-			}
-			else
-			{
-				perror("Error\n"); //wrong EA
-				exit(1);
-			}
-			free(temp);
-		}
-		else if (ft_strncmp(s1 + i, "S ", 2))
-		{
-			temp = ft_split(s1 + i, " ");
-			if (ft_sstrlen(temp) == 2)
-			{
-				info->path_n = ft_strdup(temp[1]);
-				all--;
-			}
-			else
-			{
-				perror("Error\n"); //wrong S
-				exit(1);
-			}
-			free(temp);
-		}
-		else if (ft_strncmp(s1 + i, "F ", 2))
-		{
-			temp = ft_split(s1 + i, " ");
-			if (ft_sstrlen(temp) == 2)
-			{
-				info->path_n = ft_strdup(temp[1]);
-				all--;
-			}
-			else
-			{
-				perror("Error\n"); //wrong F
-				exit(1);
-			}
-			free(temp);
-		}
-		else if (ft_strncmp(s1 + i, "C ", 2))
-		{
-			temp = ft_split(s1 + i, " ");
-			if (ft_sstrlen(temp) == 2)
-			{
-				info->path_n = ft_strdup(temp[1]);
-				all--;
-			}
-			else
-			{
-				perror("Error\n"); //wrong C
-				exit(1);
-			}
-			free(temp);
-		}
-		else if (s1[i] == "\n")
-			i++;
-		else
-		{
-			perror("Error\n"); //not enough info
-			exit(1);
-		}
-		while (s1[i] != "\n")
-			i++;
-	}
-	//check map
+	while (*s1 || *s2)
+		if (*s1++ != *s2++)
+			return (0);
+	return (1);
 }
 
-int ft_strncmp(char *s1, char *s2, int n)
+int  color_set(char *code)
 {
+	char **code_arr;
+	int rgb_arr[3];
 	int i;
 
-	i = 0;
-	while (i < n && (s1[i] || s2[i]))
+	code_arr = ft_split(code, ',');
+	if (ft_sstrlen(code_arr) != 3)
+		error();
+	i = -1;
+	while (++i < 3)
 	{
-		if (s1[i] != s2[i])
-			return (0);
-		i++;
+		if (ft_atoi(code_arr[i]) >= 0 && ft_atoi(code_arr[i]) <= 255)
+			rgb_arr[i] = ft_atoi(code_arr[i]);
+		else
+			error();
 	}
+	printf("%d\n", rgb_arr[0]);
+	printf("%d\n", rgb_arr[1]);
+	printf("%d\n", rgb_arr[2]);
+	return (rgb_arr[0]);
+}
+
+int set_info(t_info *info, char *line)
+{
+	char **line_arr;
+	int i;
+
+	line_arr = ft_split(line, ' ');
+	if (ft_sstrlen(line_arr) != 2)
+		error();
+	if (ft_strcmp("NO", line_arr[0]))
+		info->path_no = ft_strdup(line_arr[1]);
+	else if (ft_strcmp("SO", line_arr[0]))
+		info->path_so = ft_strdup(line_arr[1]);
+	else if (ft_strcmp("WE", line_arr[0]))
+		info->path_we = ft_strdup(line_arr[1]);
+	else if (ft_strcmp("EA", line_arr[0]))
+		info->path_ea = ft_strdup(line_arr[1]);
+	else if (ft_strcmp("F", line_arr[0]))
+		info->path_f = color_set(line_arr[1]);
+	else if (ft_strcmp("C", line_arr[0]))
+		info->path_c = color_set(line_arr[1]);
+	else
+		error();
+	i = 0;
+	while (i < 2)
+		free(line_arr[i++]);
+	free(line_arr);
 	return (1);
+}
+
+void read_file(char *file, t_info *info)
+{
+	int fd;
+	char *line;
+	int flag;
+
+	flag = 0;
+	fd = open(file, O_RDONLY);
+	while (get_next_line(fd, &line))
+	{
+		if (ft_strcmp("", line) == 0 && flag != 6)
+			flag += set_info(info, line);
+//		if (flag == 6 && ft_strcmp("", line) == 0)
+		free(line);
+	}
+	printf("%d\n", info->path_f);
+	printf("%s\n", info->path_so);
 }
 
 int main(int argc, char *argv[])
 {
-	char	*text;
 	t_info *info;
 
-	if (!(info = (t_info *)malloc(sizeof(t_info))))
-	{
-		perror("Error\n");
-		return (0);
-	}
-	if (argc == 2)
-	{
-		if (!(text = read_file(argv[1])))
-		{
-			perror("Error\n"); // malloc fail, open fail
-			return (0);
-		}
-		check(text, info);
-//		cub3d();
-		return (0);
-	}
-	else if (argc > 2 || argc < 2)
-	{
-		//if (argc > 2 && ft_strcmp(argv[1], "--save") == 0)
-			// save bmp
-		//else
-		perror("Error\n"); //invalid argument
-	}
-	free(text);
-	free(info);
+	if (argc != 2)
+		error();
+	if (!(info = (t_info *)malloc(sizeof(info))))
+		error();
+	read_file(argv[1], info);
 	return (0);
 }
