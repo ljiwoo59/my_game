@@ -22,10 +22,6 @@
 
 # define WIDTH 640
 # define HEIGHT 480
-# define mapWidth 24
-# define mapHeight 24
-# define tw 64
-# define th 64
 
 typedef struct s_param
 {
@@ -80,14 +76,6 @@ typedef struct	s_img
 	int	t_endian;
 }		t_img;
 
-typedef struct	s_mlx
-{
-	void	*mlx_ptr;
-	void	*win;
-	t_img	*img;
-	t_param *param;
-}		t_mlx;
-
 typedef struct s_info
 {
 	char *path_no;
@@ -104,8 +92,18 @@ typedef struct s_info
 	int init_dirY;
 }		t_info;
 
+typedef struct	s_mlx
+{
+	void	*mlx_ptr;
+	void	*win;
+	t_img	*img;
+	t_param *param;
+	t_info	*info;
+}		t_mlx;
+
 void	error();
-int	cub3d();
+void	error2(int i);
+int	cub3d(t_mlx *mlx);
 void	program_init(t_mlx *mlx);
 void	texture_init(t_mlx *mlx);
 void	imgs_init(t_mlx *mlx);
@@ -139,4 +137,15 @@ void	ft_strcpy(char *arr, char *start, char *end);
 char	**ft_split(char *s, char c);
 void	validation(char *str);
 int	ft_atoi(char *str);
+int	ft_strcmp(char *s1, char *s2);
+int	color_set(char *code);
+int	set_info(t_mlx *mlx, char *line);
+char	*ft_append(char *map, char c);
+int	valid_char(char c);
+void	check_wall(char **map_arr, int col, int row);
+int check_position(t_mlx *mlx, char **map_arr, int col, int row);
+void map_set(char *map, t_mlx *mlx);
+void read_map(int fd, t_mlx *mlx);
+void read_file(char *file, t_mlx *mlx);
+
 #endif

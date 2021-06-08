@@ -1,47 +1,20 @@
 #include "cub3d.h"
-int worldMap[mapWidth][mapHeight]=
-{
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
 
-int	_close(t_mlx *mlx, t_info *info)
+int	_close(t_mlx *mlx)
 {
 	int i;
 
+	i = 0;
+	while (i < ft_sstrlen(mlx->info->map))
+		free(mlx->info->map[i++]);
+	free(mlx->info->map);
+	free(mlx->info->path_no);
+	free(mlx->info->path_so);
+	free(mlx->info->path_we);
+	free(mlx->info->path_ea);
 	free(mlx->param);
 	free(mlx->img);
 	free(mlx);
-	i = 0;
-	while (i < ft_sstrlen(info->map))
-		free(info->map[i++]);
-	free(info->map);
-//	free(info->path_no);
-//	free(info->path_so);
-//	free(info->path_we);
-//	free(info->path_ea);
 	exit(0);
 }
 
@@ -55,16 +28,16 @@ void	wall_color(t_mlx *mlx, int y, int x_start)
 	if (mlx->param->side == 1)
 	{
 		if (mlx->param->stepY == 1)
-			mlx->img->data[pos] = mlx->img->texture[mlx->param->texY * mlx->img->height + mlx->param->texX]; //R East
+			mlx->img->data[pos] = mlx->img->texture4[mlx->param->texY * mlx->img->height + mlx->param->texX]; // East
 		else
-			mlx->img->data[pos] = mlx->img->texture2[mlx->param->texY * mlx->img->height + mlx->param->texX]; //west
+			mlx->img->data[pos] = mlx->img->texture3[mlx->param->texY * mlx->img->height + mlx->param->texX]; //west
 	}
 	else
 	{
 		if (mlx->param->stepX == 1)
-			mlx->img->data[pos] = mlx->img->texture3[mlx->param->texY * mlx->img->height + mlx->param->texX]; //south
+			mlx->img->data[pos] = mlx->img->texture2[mlx->param->texY * mlx->img->height + mlx->param->texX]; //south
 		else
-			mlx->img->data[pos] = mlx->img->texture4[mlx->param->texY * mlx->img->height + mlx->param->texX]; //north
+			mlx->img->data[pos] = mlx->img->texture[mlx->param->texY * mlx->img->height + mlx->param->texX]; //north
 	}
 }
 
@@ -76,9 +49,9 @@ void	draw_line(t_mlx *mlx, int x_start)
 	while (++y < HEIGHT)
 	{
 		if (y < mlx->param->y_start)
-			mlx->img->data[(y * WIDTH + x_start)] = 16711683;
+			mlx->img->data[(y * WIDTH + x_start)] = mlx->info->rgb_c;
 		else if (y > mlx->param->y_end)
-			mlx->img->data[(y * WIDTH + x_start)] = 0xFFE4E1;
+			mlx->img->data[(y * WIDTH + x_start)] = mlx->info->rgb_f;
 		else
 			wall_color(mlx, y, x_start);
 	}
@@ -166,7 +139,7 @@ void	dda_set(t_mlx *mlx)
 		mlx->param->mapY += mlx->param->stepY;
 		mlx->param->side = 1;
 	}
-	if (worldMap[mlx->param->mapX][mlx->param->mapY] > 0)
+	if (mlx->info->map[mlx->param->mapY][mlx->param->mapX] == '1')
 		mlx->param->hit = 1;
 }
 
@@ -189,13 +162,13 @@ int	rendering(t_mlx *mlx)
 void	program_init(t_mlx *mlx)
 {
 	if (!(mlx->mlx_ptr = mlx_init()))
-		error();
+		error2(12);
 	if (!(mlx->win = mlx_new_window(mlx->mlx_ptr, WIDTH, HEIGHT, "cub3d")))
-		error();
-	mlx->param->posX = 22;
-	mlx->param->posY = 12;
-	mlx->param->dirX = -1;
-	mlx->param->dirY = 0;
+		error2(11);
+	mlx->param->posX = (double)mlx->info->init_posX;
+	mlx->param->posY = (double)mlx->info->init_posY;
+	mlx->param->dirX = (double)mlx->info->init_dirX;
+	mlx->param->dirY = (double)mlx->info->init_dirY;
 	mlx->param->planeX = 0;
 	mlx->param->planeY = 0.66;
 	mlx->param->movespeed = 0.5;
@@ -205,42 +178,38 @@ void	program_init(t_mlx *mlx)
 void	imgs_init(t_mlx *mlx)
 {
 	if (!(mlx->img->img_ptr = mlx_new_image(mlx->mlx_ptr, WIDTH, HEIGHT)))
-		error();
+		error2(10);
 	if (!(mlx->img->data = (int *)mlx_get_data_addr(mlx->img->img_ptr, &mlx->img->bpp, &mlx->img->size_l, &mlx->img->endian)))
-		error();
+		error2(9);
 }
 
 void	texture_init(t_mlx *mlx)
 {
-	if (!(mlx->img->t_ptr = mlx_xpm_file_to_image(mlx->mlx_ptr, "./pics/eagle.xpm", &(mlx->img->width), &(mlx->img->height))))
-		error();
+	if (!(mlx->img->t_ptr = mlx_xpm_file_to_image(mlx->mlx_ptr, mlx->info->path_no, &(mlx->img->width), &(mlx->img->height))))
+		error2(1);
 	if (!(mlx->img->texture = (int *)mlx_get_data_addr(mlx->img->t_ptr, &mlx->img->t_bpp, &mlx->img->t_size_l, &mlx->img->t_endian)))
-		error();
-	if (!(mlx->img->t_ptr = mlx_xpm_file_to_image(mlx->mlx_ptr, "./pics/redbrick.xpm", &(mlx->img->width), &(mlx->img->height))))
-		error();
+		error2(2);
+	if (!(mlx->img->t_ptr = mlx_xpm_file_to_image(mlx->mlx_ptr, mlx->info->path_so, &(mlx->img->width), &(mlx->img->height))))
+		error2(3);
 	if (!(mlx->img->texture2 = (int *)mlx_get_data_addr(mlx->img->t_ptr, &mlx->img->t_bpp, &mlx->img->t_size_l, &mlx->img->t_endian)))
-		error();
-	if (!(mlx->img->t_ptr = mlx_xpm_file_to_image(mlx->mlx_ptr, "./pics/bluestone.xpm", &(mlx->img->width), &(mlx->img->height))))
-		error();
+		error2(4);
+	if (!(mlx->img->t_ptr = mlx_xpm_file_to_image(mlx->mlx_ptr, mlx->info->path_we, &(mlx->img->width), &(mlx->img->height))))
+		error2(5);
 	if (!(mlx->img->texture3 = (int *)mlx_get_data_addr(mlx->img->t_ptr, &mlx->img->t_bpp, &mlx->img->t_size_l, &mlx->img->t_endian)))
-		error();
-	if (!(mlx->img->t_ptr = mlx_xpm_file_to_image(mlx->mlx_ptr, "./pics/wood.xpm", &(mlx->img->width), &(mlx->img->height))))
-		error();
+		error2(6);
+	if (!(mlx->img->t_ptr = mlx_xpm_file_to_image(mlx->mlx_ptr, mlx->info->path_ea, &(mlx->img->width), &(mlx->img->height))))
+		error2(7);
 	if (!(mlx->img->texture4 = (int *)mlx_get_data_addr(mlx->img->t_ptr, &mlx->img->t_bpp, &mlx->img->t_size_l, &mlx->img->t_endian)))
-		error();
+		error2(8);
 }
 
-int	main()
+int	cub3d(t_mlx *mlx)
 {
 	
-	t_mlx	*mlx;
-
-	if (!(mlx = (t_mlx *)malloc(sizeof(t_mlx))))
-		error();
 	if (!(mlx->param = (t_param *)malloc(sizeof(t_param))))
-		error();
+		error2(13);
 	if (!(mlx->img = (t_img *)malloc(sizeof(t_img))))
-		error();
+		error2(14);
 	program_init(mlx);
 	texture_init(mlx);
 	imgs_init(mlx);

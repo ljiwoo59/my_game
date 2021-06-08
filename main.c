@@ -42,7 +42,7 @@ int  color_set(char *code)
 	return (rgb_arr[0] << 16 | rgb_arr[1] << 8 | rgb_arr[2]);
 }
 
-int set_info(t_info *info, char *line)
+int set_info(t_mlx *mlx, char *line)
 {
 	char **line_arr;
 	int i;
@@ -51,17 +51,17 @@ int set_info(t_info *info, char *line)
 	if (ft_sstrlen(line_arr) != 2)
 		error();
 	if (ft_strcmp("NO", line_arr[0]))
-		info->path_no = ft_strdup(line_arr[1]);
+		mlx->info->path_no = ft_strdup(line_arr[1]);
 	else if (ft_strcmp("SO", line_arr[0]))
-		info->path_so = ft_strdup(line_arr[1]);
+		mlx->info->path_so = ft_strdup(line_arr[1]);
 	else if (ft_strcmp("WE", line_arr[0]))
-		info->path_we = ft_strdup(line_arr[1]);
+		mlx->info->path_we = ft_strdup(line_arr[1]);
 	else if (ft_strcmp("EA", line_arr[0]))
-		info->path_ea = ft_strdup(line_arr[1]);
+		mlx->info->path_ea = ft_strdup(line_arr[1]);
 	else if (ft_strcmp("F", line_arr[0]))
-		info->rgb_f = color_set(line_arr[1]);
+		mlx->info->rgb_f = color_set(line_arr[1]);
 	else if (ft_strcmp("C", line_arr[0]))
-		info->rgb_c = color_set(line_arr[1]);
+		mlx->info->rgb_c = color_set(line_arr[1]);
 	else
 		error();
 	i = 0;
@@ -106,44 +106,44 @@ void check_wall(char **map_arr, int col, int row)
 		error();
 }
 
-int check_position(t_info *info, char **map_arr, int col, int row)
+int check_position(t_mlx *mlx, char **map_arr, int col, int row)
 {
-	if (info->pos_flag != 0)
+	if (mlx->info->pos_flag != 0)
 		error();
 	check_wall(map_arr, col, row);
-	info->init_posX = col;
-	info->init_posY = row;
+	mlx->info->init_posX = col;
+	mlx->info->init_posY = row;
 	if (map_arr[row][col] == 'N')
 	{
-		info->init_dirX = 0;
-		info->init_dirY = 1;
+		mlx->info->init_dirX = 0;
+		mlx->info->init_dirY = 1;
 	}
 	else if (map_arr[row][col] == 'S')
 	{
-		info->init_dirX = 0;
-		info->init_dirY = -1;
+		mlx->info->init_dirX = 0;
+		mlx->info->init_dirY = -1;
 	}
 	else if (map_arr[row][col] == 'E')
 	{
-		info->init_dirX = 1;
-		info->init_dirY = 0;
+		mlx->info->init_dirX = 1;
+		mlx->info->init_dirY = 0;
 	}
 	else if (map_arr[row][col] == 'W')
 	{
-		info->init_dirX = -1;
-		info->init_dirY = 0;
+		mlx->info->init_dirX = -1;
+		mlx->info->init_dirY = 0;
 	}
 	return (1);
 }
 
-void map_set(char *map, t_info *info)
+void map_set(char *map, t_mlx *mlx)
 {
 	char **map_arr;
 	int col;
 	int row;
 
 	map_arr = ft_split(map, '\n');
-	info->pos_flag = 0;
+	mlx->info->pos_flag = 0;
 	row = -1;
 	while (++row < ft_sstrlen(map_arr))
 	{
@@ -153,15 +153,15 @@ void map_set(char *map, t_info *info)
 			if (map_arr[row][col] == '0')
 				check_wall(map_arr, col, row);
 			else if (map_arr[row][col] == 'N' || map_arr[row][col] == 'S' || map_arr[row][col] == 'E' || map_arr[row][col] == 'W')
-				info->pos_flag = check_position(info, map_arr, col, row);
+				mlx->info->pos_flag = check_position(mlx, map_arr, col, row);
 		}
 	}
-	if (info->pos_flag == 0)
+	if (mlx->info->pos_flag == 0)
 		error();
-	info->map = map_arr;
+	mlx->info->map = map_arr;
 }
 
-void read_map(int fd, t_info *info)
+void read_map(int fd, t_mlx *mlx)
 {
 	char *map;
 	int i;
@@ -184,10 +184,10 @@ void read_map(int fd, t_info *info)
 			error();
 		i++;
 	}
-	map_set(map, info);
+	map_set(map, mlx);
 }
 
-void read_file(char *file, t_info *info)
+void read_file(char *file, t_mlx *mlx)
 {
 	int fd;
 	char *line;
@@ -199,27 +199,34 @@ void read_file(char *file, t_info *info)
 	while (flag != 6 && get_next_line(fd, &line))
 	{
 		if (ft_strcmp("", line) == 0)
-			flag += set_info(info, line);
+			flag += set_info(mlx, line);
 		free(line);
 	}
-	read_map(fd, info);
+	read_map(fd, mlx);
+
 	
-	for (int i = 0; i < ft_sstrlen(info->map); i++)
-		printf("%s\n", info->map[i]);
-	printf("%d\n", info->init_posX);
-	printf("%d\n", info->init_posY);
-	printf("%d\n", info->init_dirX);
-	printf("%d\n", info->init_dirY);
+	for (int i = 0; i < ft_sstrlen(mlx->info->map); i++)
+		printf("%s\n", mlx->info->map[i]);
+	printf("%d\n", mlx->info->init_posX);
+	printf("%d\n", mlx->info->init_posY);
+	printf("%d\n", mlx->info->init_dirX);
+	printf("%d\n", mlx->info->init_dirY);
+
 
 }
 
 int main(int argc, char *argv[])
 {
-	t_info info;
+	t_mlx *mlx;
 
 	if (argc != 2)
 		error();
-	read_file(argv[1], &info);
-	pause();
+	if (!(mlx = (t_mlx *)malloc(sizeof(t_mlx))))
+		error();
+	if (!(mlx->info = (t_info *)malloc(sizeof(t_info))))
+		error();
+	read_file(argv[1], mlx);
+	cub3d(mlx);
+//	pause();
 	return (0);
 }
