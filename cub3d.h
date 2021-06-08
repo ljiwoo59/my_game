@@ -96,6 +96,12 @@ typedef struct s_info
 	char *path_ea;
 	int rgb_f;
 	int rgb_c;
+	char **map;
+	int pos_flag;
+	int init_posX;
+	int init_posY;
+	int init_dirX;
+	int init_dirY;
 }		t_info;
 
 void	error();

@@ -27,18 +27,21 @@ int worldMap[mapWidth][mapHeight]=
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-int	_close(t_mlx *mlx)
+int	_close(t_mlx *mlx, t_info *info)
 {
+	int i;
+
 	free(mlx->param);
 	free(mlx->img);
 	free(mlx);
-	free(info->path_no);
-	free(info->path_so);
-	free(info->path_we);
-	free(info->path_ea);
-//	free(info->path_f);
-//	free(info->path_c);
-	free(info);
+	i = 0;
+	while (i < ft_sstrlen(info->map))
+		free(info->map[i++]);
+	free(info->map);
+//	free(info->path_no);
+//	free(info->path_so);
+//	free(info->path_we);
+//	free(info->path_ea);
 	exit(0);
 }
 
@@ -73,7 +76,7 @@ void	draw_line(t_mlx *mlx, int x_start)
 	while (++y < HEIGHT)
 	{
 		if (y < mlx->param->y_start)
-			mlx->img->data[(y * WIDTH + x_start)] = 0xC0FFFF;
+			mlx->img->data[(y * WIDTH + x_start)] = 16711683;
 		else if (y > mlx->param->y_end)
 			mlx->img->data[(y * WIDTH + x_start)] = 0xFFE4E1;
 		else
@@ -229,6 +232,7 @@ void	texture_init(t_mlx *mlx)
 
 int	main()
 {
+	
 	t_mlx	*mlx;
 
 	if (!(mlx = (t_mlx *)malloc(sizeof(t_mlx))))
