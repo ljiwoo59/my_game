@@ -94,8 +94,8 @@ typedef struct s_info
 	char *path_so;
 	char *path_we;
 	char *path_ea;
-	int path_f;
-	int path_c;
+	int rgb_f;
+	int rgb_c;
 }		t_info;
 
 void	error();

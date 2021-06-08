@@ -35,9 +35,11 @@ int  color_set(char *code)
 		else
 			error();
 	}
-	printf("%d\n", rgb_arr[0]);
-	printf("%d\n", rgb_arr[1]);
-	printf("%d\n", rgb_arr[2]);
+	i = -1;
+	while (++i < 3)
+		free(code_arr[i]);
+	free(code_arr);
+	printf("%s %d\n", "return", rgb_arr[0]);
 	return (rgb_arr[0]);
 }
 
@@ -58,9 +60,9 @@ int set_info(t_info *info, char *line)
 	else if (ft_strcmp("EA", line_arr[0]))
 		info->path_ea = ft_strdup(line_arr[1]);
 	else if (ft_strcmp("F", line_arr[0]))
-		info->path_f = color_set(line_arr[1]);
+		info->rgb_f = color_set(line_arr[1]);
 	else if (ft_strcmp("C", line_arr[0]))
-		info->path_c = color_set(line_arr[1]);
+		info->rgb_c = color_set(line_arr[1]);
 	else
 		error();
 	i = 0;
@@ -85,7 +87,8 @@ void read_file(char *file, t_info *info)
 //		if (flag == 6 && ft_strcmp("", line) == 0)
 		free(line);
 	}
-	printf("%d\n", info->path_f);
+	printf("%d\n", info->rgb_f);
+	printf("%d\n", info->rgb_c);
 	printf("%s\n", info->path_so);
 }
 

@@ -2,4 +2,9 @@
 NO ./abcd.png
 SO ./bad.png
 
-F 255,0,0
+F 255,0,3
+EA ./t.png
+
+
+C 111,222,244
+WE ./why.png
