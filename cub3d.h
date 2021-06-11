@@ -86,10 +86,10 @@ typedef struct s_info
 	int rgb_c;
 	char **map;
 	int pos_flag;
-	int init_posX;
-	int init_posY;
-	int init_dirX;
-	int init_dirY;
+	double init_posX;
+	double init_posY;
+	double init_dirX;
+	double init_dirY;
 }		t_info;
 
 typedef struct	s_mlx

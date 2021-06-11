@@ -111,27 +111,27 @@ int check_position(t_mlx *mlx, char **map_arr, int col, int row)
 	if (mlx->info->pos_flag != 0)
 		error();
 	check_wall(map_arr, col, row);
-	mlx->info->init_posX = col;
-	mlx->info->init_posY = row;
+	mlx->info->init_posX = (double)col + 0.5;
+	mlx->info->init_posY = (double)row + 0.5;
 	if (map_arr[row][col] == 'N')
 	{
-		mlx->info->init_dirX = 0;
-		mlx->info->init_dirY = 1;
+		mlx->info->init_dirX = -1;
+		mlx->info->init_dirY = 0;
 	}
 	else if (map_arr[row][col] == 'S')
-	{
-		mlx->info->init_dirX = 0;
-		mlx->info->init_dirY = -1;
-	}
-	else if (map_arr[row][col] == 'E')
 	{
 		mlx->info->init_dirX = 1;
 		mlx->info->init_dirY = 0;
 	}
+	else if (map_arr[row][col] == 'E')
+	{
+		mlx->info->init_dirX = 0;
+		mlx->info->init_dirY = 1;
+	}
 	else if (map_arr[row][col] == 'W')
 	{
-		mlx->info->init_dirX = -1;
-		mlx->info->init_dirY = 0;
+		mlx->info->init_dirX = 0;
+		mlx->info->init_dirY = -1;
 	}
 	return (1);
 }
@@ -169,7 +169,7 @@ void read_map(int fd, t_mlx *mlx)
 
 	if (!(map = (char *)malloc(1)))
 		error();
-	map = 0;
+	map[0] = 0;
 	while (read(fd, &c, 1) > 0)
 		map = ft_append(map, c);
 	close(fd);
@@ -203,16 +203,6 @@ void read_file(char *file, t_mlx *mlx)
 		free(line);
 	}
 	read_map(fd, mlx);
-
-	
-	for (int i = 0; i < ft_sstrlen(mlx->info->map); i++)
-		printf("%s\n", mlx->info->map[i]);
-	printf("%d\n", mlx->info->init_posX);
-	printf("%d\n", mlx->info->init_posY);
-	printf("%d\n", mlx->info->init_dirX);
-	printf("%d\n", mlx->info->init_dirY);
-
-
 }
 
 int main(int argc, char *argv[])

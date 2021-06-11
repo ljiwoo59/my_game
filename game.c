@@ -12,9 +12,11 @@ int	_close(t_mlx *mlx)
 	free(mlx->info->path_so);
 	free(mlx->info->path_we);
 	free(mlx->info->path_ea);
+	free(mlx->info);
 	free(mlx->param);
 	free(mlx->img);
 	free(mlx);
+	pause();
 	exit(0);
 }
 
@@ -28,16 +30,16 @@ void	wall_color(t_mlx *mlx, int y, int x_start)
 	if (mlx->param->side == 1)
 	{
 		if (mlx->param->stepY == 1)
-			mlx->img->data[pos] = mlx->img->texture4[mlx->param->texY * mlx->img->height + mlx->param->texX]; // East
+			mlx->img->data[pos] = mlx->img->texture2[mlx->param->texY * mlx->img->height + mlx->param->texX]; // S
 		else
-			mlx->img->data[pos] = mlx->img->texture3[mlx->param->texY * mlx->img->height + mlx->param->texX]; //west
+			mlx->img->data[pos] = mlx->img->texture[mlx->param->texY * mlx->img->height + mlx->param->texX]; //N
 	}
 	else
 	{
 		if (mlx->param->stepX == 1)
-			mlx->img->data[pos] = mlx->img->texture2[mlx->param->texY * mlx->img->height + mlx->param->texX]; //south
+			mlx->img->data[pos] = mlx->img->texture4[mlx->param->texY * mlx->img->height + mlx->param->texX]; //E
 		else
-			mlx->img->data[pos] = mlx->img->texture[mlx->param->texY * mlx->img->height + mlx->param->texX]; //north
+			mlx->img->data[pos] = mlx->img->texture3[mlx->param->texY * mlx->img->height + mlx->param->texX]; //W
 	}
 }
 
@@ -90,6 +92,10 @@ void	r_param_init(t_mlx *mlx, int x)
 	mlx->param->mapY = (int)mlx->param->posY;
 	mlx->param->deltaDistX = fabs(1 / mlx->param->rayDirX);
 	mlx->param->deltaDistY = fabs(1 / mlx->param->rayDirY);
+
+//	mlx->param->deltaDistX = (mlx->param->rayDirY == 0) ? 0 : ((mlx->param->rayDirX == 0) ? 1 : fabs(1 / mlx->param->rayDirX));
+//	mlx->param->deltaDistY = (mlx->param->rayDirX == 0) ? 0 : ((mlx->param->rayDirY == 0) ? 1 : fabs(1 / mlx->param->rayDirY));
+
 	mlx->param->hit = 0;
 	r_param_init2(mlx);
 }
@@ -165,12 +171,28 @@ void	program_init(t_mlx *mlx)
 		error2(12);
 	if (!(mlx->win = mlx_new_window(mlx->mlx_ptr, WIDTH, HEIGHT, "cub3d")))
 		error2(11);
-	mlx->param->posX = (double)mlx->info->init_posX;
-	mlx->param->posY = (double)mlx->info->init_posY;
-	mlx->param->dirX = (double)mlx->info->init_dirX;
-	mlx->param->dirY = (double)mlx->info->init_dirY;
-	mlx->param->planeX = 0;
-	mlx->param->planeY = 0.66;
+	mlx->param->posX = mlx->info->init_posX;
+	mlx->param->posY = mlx->info->init_posY;
+	mlx->param->dirX = mlx->info->init_dirY;
+	mlx->param->dirY = mlx->info->init_dirX;
+	if (mlx->param->dirX == 0)
+	{
+		if (mlx->param->dirY == -1)
+			mlx->param->planeX = 0.66;
+		else
+			mlx->param->planeX = -0.66;
+	}
+	else
+		mlx->param->planeX = 0;
+	if (mlx->param->dirY == 0)
+	{
+		if (mlx->param->dirX == -1)
+			mlx->param->planeY = -0.66;
+		else
+			mlx->param->planeY = 0.66;
+	}
+	else
+		mlx->param->planeY  = 0;
 	mlx->param->movespeed = 0.5;
 	mlx->param->rotspeed = 0.33;
 }
