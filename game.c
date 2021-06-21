@@ -16,7 +16,7 @@ int	_close(t_mlx *mlx)
 	free(mlx->param);
 	free(mlx->img);
 	free(mlx);
-	pause();
+//	pause();
 	exit(0);
 }
 
@@ -92,10 +92,6 @@ void	r_param_init(t_mlx *mlx, int x)
 	mlx->param->mapY = (int)mlx->param->posY;
 	mlx->param->deltaDistX = fabs(1 / mlx->param->rayDirX);
 	mlx->param->deltaDistY = fabs(1 / mlx->param->rayDirY);
-
-//	mlx->param->deltaDistX = (mlx->param->rayDirY == 0) ? 0 : ((mlx->param->rayDirX == 0) ? 1 : fabs(1 / mlx->param->rayDirX));
-//	mlx->param->deltaDistY = (mlx->param->rayDirX == 0) ? 0 : ((mlx->param->rayDirY == 0) ? 1 : fabs(1 / mlx->param->rayDirY));
-
 	mlx->param->hit = 0;
 	r_param_init2(mlx);
 }
