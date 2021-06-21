@@ -29,7 +29,7 @@ int		get_next_line(int fd, char **line)
 	int			index;
 
 	if (fd < 0 || line == 0)
-		return (-1);
+		error();
 	if ((index = is_new_line(saved[fd])) != -1)
 		return (return_line(index, fd, line, saved));
 	while ((read_size = read(fd, buf, 1)) > 0)
@@ -40,7 +40,7 @@ int		get_next_line(int fd, char **line)
 			return (return_line(index, fd, line, saved));
 	}
 	if (read_size < 0)
-		return (-1);
+		error();
 	if (saved[fd])
 		*line = saved[fd];
 	else

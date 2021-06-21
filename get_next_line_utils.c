@@ -17,7 +17,7 @@ char	*ft_strldup(char *s1, int start, int end)
 
 	i = 0;
 	if (!(ptr = (char *)malloc(end - start + 1)))
-		return (NULL);
+		error();
 	while (start < end)
 		ptr[i++] = s1[start++];
 	ptr[i] = 0;
@@ -31,7 +31,7 @@ char	*ft_strldup_file(char *s1, int start, int end)
 
 	i = 0;
 	if (!(ptr = (char *)malloc(end - start + 1)))
-		return (NULL);
+		error();
 	while (start < end)
 		ptr[i++] = s1[start++];
 	ptr[i] = 0;
@@ -48,7 +48,7 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	size = ft_strlen(s1) + ft_strlen(s2);
 	if (!(arr = (char *)malloc(size + 1)))
-		return (NULL);
+		error();
 	i = 0;
 	while (s1 && s1[i])
 	{
