@@ -23,3 +23,23 @@ void	dir_set(t_mlx *mlx, int i)
 		mlx->info->init_dirY = -1;
 	}
 }
+
+int	_close(t_mlx *mlx)
+{
+	int i;
+
+	i = 0;
+	while (i < ft_sstrlen(mlx->info->map))
+		free(mlx->info->map[i++]);
+	free(mlx->info->map);
+	free(mlx->info->path_no);
+	free(mlx->info->path_so);
+	free(mlx->info->path_we);
+	free(mlx->info->path_ea);
+	free(mlx->info);
+	free(mlx->param);
+	free(mlx->img);
+	free(mlx);
+//	pause();
+	exit(0);
+}
