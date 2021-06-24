@@ -34,7 +34,7 @@ clean :
 	rm -rf $(OBJ)
 
 fclean : clean
-	rm -rf $(TARGET)
+	rm -rf $(NAME)
 
 re : fclean all
 
