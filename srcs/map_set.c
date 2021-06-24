@@ -1,10 +1,10 @@
 #include "cub3d.h"
 
-int  color_set(char *code)
+int		color_set(char *code)
 {
-	char **code_arr;
-	int rgb_arr[3];
-	int i;
+	char	**code_arr;
+	int		rgb_arr[3];
+	int		i;
 
 	code_arr = ft_split(code, ',');
 	if (ft_sstrlen(code_arr) != 3)
@@ -24,7 +24,7 @@ int  color_set(char *code)
 	return (rgb_arr[0] << 16 | rgb_arr[1] << 8 | rgb_arr[2]);
 }
 
-int set_info(t_mlx *mlx, char *line)
+int		set_info(t_mlx *mlx, char *line)
 {
 	char **line_arr;
 
@@ -49,11 +49,11 @@ int set_info(t_mlx *mlx, char *line)
 	return (1);
 }
 
-void map_set(char *map, t_mlx *mlx)
+void	map_set(char *map, t_mlx *mlx)
 {
-	char **map_arr;
-	int col;
-	int row;
+	char	**map_arr;
+	int		col;
+	int		row;
 
 	map_arr = ft_split(map, '\n');
 	mlx->info->pos_flag = 0;
@@ -65,7 +65,8 @@ void map_set(char *map, t_mlx *mlx)
 		{
 			if (map_arr[row][col] == '0')
 				check_wall(map_arr, col, row);
-			else if (map_arr[row][col] == 'N' || map_arr[row][col] == 'S' || map_arr[row][col] == 'E' || map_arr[row][col] == 'W')
+			else if (map_arr[row][col] == 'N' || map_arr[row][col] == 'S'
+					|| map_arr[row][col] == 'E' || map_arr[row][col] == 'W')
 				mlx->info->pos_flag = check_position(mlx, map_arr, col, row);
 		}
 	}
@@ -74,23 +75,26 @@ void map_set(char *map, t_mlx *mlx)
 	mlx->info->map = map_arr;
 }
 
-void check_wall(char **map_arr, int col, int row)
+void	check_wall(char **map_arr, int col, int row)
 {
-	if (row == 0 || row == (ft_sstrlen(map_arr) - 1) || col == 0 ||  (col == (ft_strlen(map_arr[row]) - 1)))
+	if (row == 0 || row == (ft_sstrlen(map_arr) - 1)
+			|| col == 0 || (col == (ft_strlen(map_arr[row]) - 1)))
 		error();
-	if (col > ft_strlen(map_arr[row - 1]) || col > ft_strlen(map_arr[row + 1]) || (col + 1) > ft_strlen(map_arr[row]) || (col - 1) < 0)
+	if (col > ft_strlen(map_arr[row - 1]) || col > ft_strlen(map_arr[row + 1])
+			|| (col + 1) > ft_strlen(map_arr[row]) || (col - 1) < 0)
 		error();
-	if (map_arr[row - 1][col] == ' ' || map_arr[row + 1][col] == ' ' || map_arr[row][col - 1] == ' ' || map_arr[row][col + 1] == ' ')
+	if (map_arr[row - 1][col] == ' ' || map_arr[row + 1][col] == ' '
+			|| map_arr[row][col - 1] == ' ' || map_arr[row][col + 1] == ' ')
 		error();
 }
 
-int check_position(t_mlx *mlx, char **map_arr, int col, int row)
+int		check_position(t_mlx *mlx, char **map_arr, int col, int row)
 {
 	if (mlx->info->pos_flag != 0)
 		error();
 	check_wall(map_arr, col, row);
-	mlx->info->init_posX = (double)col + 0.5;
-	mlx->info->init_posY = (double)row + 0.5;
+	mlx->info->init_pos_x = (double)col + 0.5;
+	mlx->info->init_pos_y = (double)row + 0.5;
 	if (map_arr[row][col] == 'N')
 		dir_set(mlx, 1);
 	else if (map_arr[row][col] == 'S')

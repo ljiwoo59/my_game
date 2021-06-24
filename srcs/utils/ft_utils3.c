@@ -4,27 +4,27 @@ void	dir_set(t_mlx *mlx, int i)
 {
 	if (i == 1)
 	{
-		mlx->info->init_dirX = -1;
-		mlx->info->init_dirY = 0;
+		mlx->info->init_dir_x = -1;
+		mlx->info->init_dir_y = 0;
 	}
 	else if (i == 2)
 	{
-		mlx->info->init_dirX = 1;
-		mlx->info->init_dirY = 0;
+		mlx->info->init_dir_x = 1;
+		mlx->info->init_dir_y = 0;
 	}
 	else if (i == 3)
 	{
-		mlx->info->init_dirX = 0;
-		mlx->info->init_dirY = 1;
+		mlx->info->init_dir_x = 0;
+		mlx->info->init_dir_y = 1;
 	}
 	else if (i == 4)
 	{
-		mlx->info->init_dirX = 0;
-		mlx->info->init_dirY = -1;
+		mlx->info->init_dir_x = 0;
+		mlx->info->init_dir_y = -1;
 	}
 }
 
-int	_close(t_mlx *mlx)
+int		ft_close(t_mlx *mlx)
 {
 	int i;
 
@@ -40,6 +40,5 @@ int	_close(t_mlx *mlx)
 	free(mlx->param);
 	free(mlx->img);
 	free(mlx);
-//	pause();
 	exit(0);
 }

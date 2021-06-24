@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void validation(char *str)
+void	validation(char *str)
 {
 	if (*str == '+' || *str == '-')
 	{
@@ -10,19 +10,19 @@ void validation(char *str)
 	}
 	while (*str)
 	{
-		if (!(*str >= '0' && *str <= '9')) 
+		if (!(*str >= '0' && *str <= '9'))
 			error();
 		str++;
 	}
 }
 
-int			ft_atoi(char *str)
+int		ft_atoi(char *str)
 {
 	long long	num;
 	int			minus;
 
 	num = 0;
-	minus = 1;	
+	minus = 1;
 	validation(str);
 	if (*str == '+' || *str == '-')
 	{
@@ -63,7 +63,7 @@ int		ft_wordcount(char *s, char c)
 	return (count);
 }
 
-void		ft_strcpy(char *arr, char *start, char *end)
+void	ft_strcpy(char *arr, char *start, char *end)
 {
 	while (start < end)
 	{
@@ -74,7 +74,7 @@ void		ft_strcpy(char *arr, char *start, char *end)
 	*arr = 0;
 }
 
-char			**ft_split(char *s, char c)
+char	**ft_split(char *s, char c)
 {
 	char	**arr;
 	char	*start;

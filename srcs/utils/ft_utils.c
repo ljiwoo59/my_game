@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int ft_sstrlen(char **s)
+int		ft_sstrlen(char **s)
 {
 	int count;
 
@@ -10,7 +10,7 @@ int ft_sstrlen(char **s)
 	return (count);
 }
 
-int ft_strcmp(char *s1, char *s2)
+int		ft_strcmp(char *s1, char *s2)
 {
 	while (*s1 || *s2)
 		if (*s1++ != *s2++)
@@ -18,11 +18,11 @@ int ft_strcmp(char *s1, char *s2)
 	return (1);
 }
 
-char *ft_append(char *map, char c)
+char	*ft_append(char *map, char c)
 {
-	int size;
-	int i;
-	char *new_map;
+	int		size;
+	int		i;
+	char	*new_map;
 
 	size = ft_strlen(map);
 	if (!(new_map = (char *)malloc(size + 2)))

@@ -2,19 +2,33 @@ CC = gcc
 CFLAG = -Wall -Wextra -Werror
 LIB = -Lminilibx -lmlx -framework OpenGL -framework AppKit
 
-TARGET = cub3d
-SRC = main.c game.c keycode.c keycode2.c error.c get_next_line.c get_next_line_utils.c ft_utils.c ft_utils2.c ft_utils3.c map_set.c init.c draw.c
+NAME = cub3d
+
+SRC = srcs/main.c \
+	  srcs/game.c \
+	  srcs/keycode.c \
+	  srcs/keycode2.c \
+	  srcs/error.c \
+	  srcs/get_next_line/get_next_line.c \
+	  srcs/get_next_line/get_next_line_utils.c \
+	  srcs/utils/ft_utils.c \
+	  srcs/utils/ft_utils2.c \
+	  srcs/utils/ft_utils3.c \
+	  srcs/map_set.c \
+	  srcs/init.c \
+	  srcs/draw.c \
+
+INCDIR = ./includes/
+
 OBJ = $(SRC:.c=.o)
 
-$(NAME) : all
+.c.o :
+	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o) -I $(INCDIR) 
 
-all : $(TARGET)
+all : $(NAME)
 
-$(TARGET) : $(OBJ)
-	      $(CC) $(CFLAG) $(LIB) -o $(TARGET) $(OBJ)
-
-$(OBJ) : $(SRC)
-	$(CC) $(CFLAG) -c $(SRC)	   
+$(NAME) : $(OBJ)
+	      $(CC) $(LIB) -o $(NAME) $(OBJ)
 
 clean :
 	rm -rf $(OBJ)

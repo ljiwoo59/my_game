@@ -1,17 +1,18 @@
 #include "cub3d.h"
 
-int valid_char(char c)
+int		valid_char(char c)
 {
-	if (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == ' ' || c == '\n')
+	if (c == '0' || c == '1' || c == 'N' || c == 'S'
+			|| c == 'E' || c == 'W' || c == ' ' || c == '\n')
 		return (1);
 	return (0);
 }
 
-void read_map(int fd, t_mlx *mlx)
+void	read_map(int fd, t_mlx *mlx)
 {
-	char *map;
-	int i;
-	char c;
+	char	*map;
+	int		i;
+	char	c;
 
 	if (!(map = (char *)malloc(1)))
 		error();
@@ -33,11 +34,11 @@ void read_map(int fd, t_mlx *mlx)
 	map_set(map, mlx);
 }
 
-void read_file(char *file, t_mlx *mlx)
+void	read_file(char *file, t_mlx *mlx)
 {
-	int fd;
-	char *line;
-	int flag;
+	int		fd;
+	char	*line;
+	int		flag;
 
 	flag = 0;
 	if (!(fd = open(file, O_RDONLY)))
@@ -51,7 +52,7 @@ void read_file(char *file, t_mlx *mlx)
 	read_map(fd, mlx);
 }
 
-int main(int argc, char *argv[])
+int		main(int argc, char *argv[])
 {
 	t_mlx *mlx;
 
@@ -63,6 +64,5 @@ int main(int argc, char *argv[])
 		error();
 	read_file(argv[1], mlx);
 	cub3d(mlx);
-//	pause();
 	return (0);
 }
