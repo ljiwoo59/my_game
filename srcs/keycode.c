@@ -2,7 +2,7 @@
 
 int		key_press(int keycode, t_mlx *mlx)
 {
-	imgs_init(mlx);
+	//imgs_init(mlx);
 	if (keycode == KEY_W)
 		key_w(mlx);
 	else if (keycode == KEY_S)

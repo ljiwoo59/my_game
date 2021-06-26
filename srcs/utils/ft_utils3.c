@@ -39,6 +39,8 @@ int		ft_close(t_mlx *mlx)
 	free(mlx->info);
 	free(mlx->param);
 	free(mlx->img);
+	mlx_destroy_image(mlx->mlx_ptr, mlx->img->img_ptr);
+	mlx_destroy_window(mlx->mlx_ptr, mlx->win);
 	free(mlx);
 	exit(0);
 }

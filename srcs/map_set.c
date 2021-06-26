@@ -10,7 +10,7 @@ int		color_set(char *code)
 	if (ft_sstrlen(code_arr) != 3)
 		error();
 	i = -1;
-	while (++i < 3)
+	while (code_arr[++i])
 	{
 		if (ft_atoi(code_arr[i]) >= 0 && ft_atoi(code_arr[i]) <= 255)
 			rgb_arr[i] = ft_atoi(code_arr[i]);
@@ -18,7 +18,7 @@ int		color_set(char *code)
 			error();
 	}
 	i = -1;
-	while (++i < 3)
+	while (code_arr[++i])
 		free(code_arr[i]);
 	free(code_arr);
 	return (rgb_arr[0] << 16 | rgb_arr[1] << 8 | rgb_arr[2]);
@@ -73,6 +73,7 @@ void	map_set(char *map, t_mlx *mlx)
 	if (mlx->info->pos_flag == 0)
 		error();
 	mlx->info->map = map_arr;
+	map_arr = NULL;
 }
 
 void	check_wall(char **map_arr, int col, int row)

@@ -85,7 +85,7 @@ int		cub3d(t_mlx *mlx)
 	texture_init(mlx);
 	imgs_init(mlx);
 	mlx_hook(mlx->win, X_EVENT_KEY_PRESS, 0, &key_press, mlx);
-	mlx_hook(mlx->win, X_EVENT_KEY_EXIT, 0, &close, mlx);
+	mlx_hook(mlx->win, X_EVENT_KEY_EXIT, 0, &ft_close, mlx);
 	mlx_loop_hook(mlx->mlx_ptr, &rendering, mlx);
 	mlx_loop(mlx->mlx_ptr);
 	return (0);

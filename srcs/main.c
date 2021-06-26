@@ -19,7 +19,6 @@ void	read_map(int fd, t_mlx *mlx)
 	map[0] = 0;
 	while (read(fd, &c, 1) > 0)
 		map = ft_append(map, c);
-	close(fd);
 	i = 0;
 	while (map[i] == '\n')
 		i++;
@@ -50,6 +49,7 @@ void	read_file(char *file, t_mlx *mlx)
 		free(line);
 	}
 	read_map(fd, mlx);
+	close(fd);
 }
 
 int		main(int argc, char *argv[])
