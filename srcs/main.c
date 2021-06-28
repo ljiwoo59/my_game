@@ -58,6 +58,10 @@ int		main(int argc, char *argv[])
 
 	if (argc != 2)
 		error();
+	if (ft_strlen(argv[1]) < 4 || argv[1][ft_strlen(argv[1]) - 1] != 'b' ||
+			argv[1][ft_strlen(argv[1]) - 2] != 'u' || argv[1][ft_strlen(argv[1]) - 3] != 'c' ||
+			argv[1][ft_strlen(argv[1]) - 4] != '.')
+		error();
 	if (!(mlx = (t_mlx *)malloc(sizeof(t_mlx))))
 		error();
 	if (!(mlx->info = (t_info *)malloc(sizeof(t_info))))
