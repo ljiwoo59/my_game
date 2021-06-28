@@ -2,6 +2,8 @@
 
 int		key_press(int keycode, t_mlx *mlx)
 {
+	mlx_destroy_image(mlx->mlx_ptr, mlx->img->img_ptr);
+	imgs_init(mlx);
 	if (keycode == KEY_W)
 		key_w(mlx);
 	else if (keycode == KEY_S)

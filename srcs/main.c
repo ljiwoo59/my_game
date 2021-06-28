@@ -63,6 +63,7 @@ int		main(int argc, char *argv[])
 	if (!(mlx->info = (t_info *)malloc(sizeof(t_info))))
 		error();
 	read_file(argv[1], mlx);
-	cub3d(mlx);
+//	cub3d(mlx);
+	ft_close(mlx);
 	return (0);
 }
