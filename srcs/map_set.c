@@ -74,6 +74,7 @@ void	map_set(char *map, t_mlx *mlx)
 		error();
 	mlx->info->map = map_arr;
 	map_arr = NULL;
+	free(map);
 }
 
 void	check_wall(char **map_arr, int col, int row)
