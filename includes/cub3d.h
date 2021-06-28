@@ -102,7 +102,6 @@ typedef struct			s_mlx
 }						t_mlx;
 
 void					error();
-void					error2(int i);
 int						cub3d(t_mlx *mlx);
 void					program_init(t_mlx *mlx);
 void					texture_init(t_mlx *mlx);

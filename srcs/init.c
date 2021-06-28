@@ -31,10 +31,10 @@ void	program_init(t_mlx *mlx)
 void	imgs_init(t_mlx *mlx)
 {
 	if (!(mlx->img->img_ptr = mlx_new_image(mlx->mlx_ptr, WIDTH, HEIGHT)))
-		error2(10);
+		error();
 	if (!(mlx->img->data = (int *)mlx_get_data_addr(mlx->img->img_ptr,
 					&mlx->img->bpp, &mlx->img->size_l, &mlx->img->endian)))
-		error2(9);
+		error();
 }
 
 void	r_param_init2(t_mlx *mlx)
