@@ -1,8 +1,7 @@
 # my_game
 Recoding Wolfenstein 3D
 
-<img width="639" alt="스크린샷 2021-06-29 오후 3 54 03" src="https://user-images.githubusercontent.com/54715744/123751069-466a7800-d8f2-11eb-87d1-995a51a77dc8.png">
-
+<img width="638" alt="스크린샷 2021-06-29 오후 3 58 12" src="https://user-images.githubusercontent.com/54715744/123751569-d8728080-d8f2-11eb-80ce-b7108e924328.png">
 
 ## MiniLibX
 [A Simple graphical interface library.](https://qst0.github.io/ft_libgfx/man_mlx.html)
@@ -122,6 +121,8 @@ typedef struct s_param
   - 1 : wall
   - N, S, W, E : player position and direction
  * Map must be surrounded by walls.
+
+If any misconfiguration of any kind is encountered in the file or during the program, program exits properly and return "Error\n".
 
 ## References
 [Guide for 42 School Graphics Custom Library](https://qst0.github.io/ft_libgfx/man_mlx.html)
