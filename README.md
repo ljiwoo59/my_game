@@ -106,20 +106,20 @@ typedef struct s_param
 
  * A first argument must be a description file with **.cub** extention.
  * Each element contains a type identifier and specific information.
-  - NO  path to the north texture
-  - SO  path to the south texture
-  - WE  path to the west texture
-  - EA  path to the east texture
-  - F  R,G,B colors of floor in range \[0, 255]
-  - C  R,G,B colors of ceiling in range \[0, 255]
+   - NO  path to the north texture
+   - SO  path to the south texture
+   - WE  path to the west texture
+   - EA  path to the east texture
+   - F  R,G,B colors of floor in range \[0, 255]
+   - C  R,G,B colors of ceiling in range \[0, 255]
  * Each element can be seperated by empty lines.
  * Each information from an element can be seperated by spaces.
  * Each element can be ordered randomly.
  * Map content always has to be the last.
  * Map content must composed by only 6 characters.
-  - 0 : empty space
-  - 1 : wall
-  - N, S, W, E : player position and direction
+   - 0 : empty space
+   - 1 : wall
+   - N, S, W, E : player position and direction
  * Map must be surrounded by walls.
 
 If any misconfiguration of any kind is encountered in the file or during the program, program exits properly and return "Error\n".
