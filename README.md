@@ -89,5 +89,5 @@ typedef struct s_param
   double tex_x; // x-coordinate of texture
   double text_y; // y-coordinate of texture
   double tex_pos; // starting texture coordinate
-  }
+ }             t_param;
  ```
