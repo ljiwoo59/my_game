@@ -50,3 +50,44 @@ Recoding Wolfenstein 3D
 
 ### *int mlx_destroy_window(void \*mlx_ptr, void \*win_ptr)*
 * Destroys given window.
+
+## Raycasting
+A rendering technique to create a 3D perspective in a 2D map.
+
+```c
+typedef struct s_param
+{
+  double pos_x; // player x-position
+  double pos_y; // player y-position
+  double dir_x; // direction x-vector
+  double dir_y; // direction y-vector
+  
+  double plane_x; // camera plane of player
+  double plane_y; // should be perpendicular to direction vector
+  
+  double camera_x; // x-coordinate in camera space (-1 <= x <= 1)
+  double ray_dir_x; // ray direction x-vector
+  double ray_dir_y; // ray direction y-vector
+  int map_x; // solid x-position of map
+  int map_y; // soilid y-postion of map
+  
+  double side_dist_x; // initially a distance of ray from its start position to the first side
+  double side_dist_y; // then indicates total distance of ray
+  
+  double delta_dist_x; // distance of ray from x-side to next x-side
+  double delta_dist_y; // distance of ray from y-side to next y-side
+  double perp_wall_dist; // distance to the wall projected on camera direction (avoiding fisheye effect)
+  int step_x; // -1 if ray direction has negative x-component, 1 if positive x-component
+  int step_y; // -1 if ray direction has negative y-component, 1 if positive y-component
+  int hit; // 1 if wall is hit
+  int side; // 0 if x-side is hit, 1 if y-side is hit
+  int line_height; // height of wall to draw
+  
+  // will draw wall vertically
+  double wall_x; // where exactly the wall was hit
+  double step; // how much to increase the texture coordinate per screen pixel
+  double tex_x; // x-coordinate of texture
+  double text_y; // y-coordinate of texture
+  double tex_pos; // starting texture coordinate
+  }
+ ```
