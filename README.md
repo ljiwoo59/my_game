@@ -125,6 +125,6 @@ typedef struct s_param
 If any misconfiguration of any kind is encountered in the file or during the program, program exits properly and return "Error\n".
 
 ## References
-[Guide for 42 School Graphics Custom Library](https://qst0.github.io/ft_libgfx/man_mlx.html)
-[42Docs/Libs](https://harm-smits.github.io/42docs/libs/minilibx)
-[Lode's Computer Graphics Tutorial](https://lodev.org/cgtutor/raycasting.html)
+* [Guide for 42 School Graphics Custom Library](https://qst0.github.io/ft_libgfx/man_mlx.html)
+* [42Docs/Libs](https://harm-smits.github.io/42docs/libs/minilibx)
+* [Lode's Computer Graphics Tutorial](https://lodev.org/cgtutor/raycasting.html)
