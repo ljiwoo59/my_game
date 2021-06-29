@@ -18,7 +18,7 @@ Recoding Wolfenstein 3D
 * Creates a new image in memory.
 * Returns a *void\* image identifier* if successful, otherwise returns NULL.
 
-### *void \*mlx_xpm_file_to_image(void \*mlx_ptr, char /*filename, int */width, int */height)*
+### *void \*mlx_xpm_file_to_image(void \*mlx_ptr, char \*filename, int \*width, int \*height)*
 * Creates a new image in memory using specified filename.
   - Width and height of the image will be stored.
 
